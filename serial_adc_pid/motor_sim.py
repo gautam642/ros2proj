@@ -19,7 +19,7 @@ class MotorSimulator(Node):
 
     def publish_rpm(self):
         # Simulate motor response to PWM (simple first-order lag model)
-        self.rpm += 0.1 * (self.pwm * 6 - self.rpm)  # Scale: PWM 255 ≈ 1500 RPM
+        self.rpm += 0.3 * ((self.pwm / 255.0) * 3000 - self.rpm) # Scale: PWM 255 ≈ 1500 RPM
         rpm_int = int(self.rpm)
         msg = Int32()
         msg.data = rpm_int

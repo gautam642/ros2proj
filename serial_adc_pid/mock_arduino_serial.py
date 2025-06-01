@@ -2,7 +2,7 @@ import time
 import serial
 import random
 
-ser = serial.Serial('/dev/pts/7', 9600)
+ser = serial.Serial('/dev/pts/11', 9600)
 
 while True:
     adc_val = random.randint(0, 1023)

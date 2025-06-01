@@ -8,7 +8,7 @@ class SerialADCReader(Node):
     def __init__(self):
         super().__init__('serial_adc_reader')
         self.publisher_ = self.create_publisher(Int32, '/adc_values', 10)
-        self.serial_port = serial.Serial('/dev/pts/8', 9600, timeout=1)
+        self.serial_port = serial.Serial('/dev/pts/12', 9600, timeout=1)
         self.timer = self.create_timer(0.2, self.read_serial)
         self.pattern = re.compile(r"!E(\d{4})D")
 
