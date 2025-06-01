@@ -23,13 +23,14 @@ class PIDController(Node):
         self.motor_command_pub = self.create_publisher(Int32, '/motor_pwm', 10)
 
     def listener_callback(self, msg):
-        current_rpm = msg.data  # Assuming ADC value maps directly to RPM
+        adc_val = msg.data  # 0–1023
+        current_rpm = (adc_val / 1023.0) * 3000 
         error = self.target_rpm - current_rpm
         self.integral += error
         derivative = error - self.last_error
 
         output = self.kp * error + self.ki * self.integral + self.kd * derivative
-        pwm_signal = int(min(max(output, 0), 255))  # Clamp to 0-255 for PWM
+        pwm_signal = int(min(max(output / 3000.0) * 255, 255))  # Clamp to 0-255 for PWM
 
         pwm_msg = Int32()
         pwm_msg.data = pwm_signal
